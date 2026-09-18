@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+#
+# AppRun for the Termite AppImage.
+#
+# Launched with no arguments (e.g. clicking the application icon, which uses
+# the bundled termite.desktop) it opens the Termite *settings* panel.
+# The background utility is started with:
+#
+#     Termite-*.AppImage --runtime
+#
+# Any other arguments are forwarded to the termite binary as commands
+# (toggle / show / hide / status / stop / restart / shortcut ...).
+#
+set -euo pipefail
+
+HERE="$(cd "$(dirname "$(readlink -f "${0}")")" && pwd)"
+
+# Runtime library / plugin / data search paths for the bundled payload.
+export LD_LIBRARY_PATH="$HERE/usr/lib:$HERE/usr/lib64${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+export QT_PLUGIN_PATH="$HERE/usr/plugins:$HERE/usr/lib/qt6/plugins${QT_PLUGIN_PATH:+:$QT_PLUGIN_PATH}"
+export XDG_DATA_DIRS="$HERE/usr/share:${XDG_DATA_DIRS:-/usr/local/share:/usr/share}"
+
+BIN="$HERE/usr/bin/termite"
+
+# No arguments: the icon / desktop entry => open the settings panel.
+if [ "$#" -eq 0 ]; then
+    exec "$BIN" --settings
+fi
+
+# Explicit request to run the background utility (used by autostart).
+if [ "$1" = "--runtime" ]; then
+    shift
+    exec "$BIN" "$@"
+fi
+
+# Everything else is a runtime command or a flag such as --settings.
+exec "$BIN" "$@"

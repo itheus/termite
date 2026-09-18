@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=Application
+Name=Termite
+GenericName=Terminal
+Comment=A terminal that lives under your KDE desktop
+Exec=termite
+Icon=termite
+Terminal=false
+Categories=Utility;System;
+Keywords=terminal;shell;termite;settings;
+StartupNotify=true
+X-KDE-StartupNotify=false
