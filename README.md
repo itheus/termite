@@ -50,7 +50,7 @@ Check out the [Releases](https://github.com/itheus/termite/releases) page
 
   
 Use [GearLever](https://github.com/mijorus/gearlever) to integrate the AppImage on your system automatically. 
-<h5> Alternatively </h5>
+### Alternatively
 Download the AppImage, make it executable, and start the background utility:
 
 ```bash
